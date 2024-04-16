@@ -54,7 +54,7 @@ pub fn get_current_device_for_gl_context_khr(
 ) -> Result<cl_device_id> {
     let device = intptr_t::from(gl::get_gl_context_info_khr(
         properties.as_ptr() as *mut cl_context_properties,
-        gl::GlCL_CURRENT_DEVICE_FOR_GL_CONTEXT_KHR,
+        gl::CL_CURRENT_DEVICE_FOR_GL_CONTEXT_KHR,
     )?) as cl_device_id;
     Ok(device)
 }
@@ -71,7 +71,7 @@ pub fn get_devices_for_gl_context_khr(
 ) -> Result<Vec<cl_device_id>> {
     let dev_ptrs: Vec<intptr_t> = gl::get_gl_context_info_khr(
         properties.as_ptr() as *mut cl_context_properties,
-        gl::GlCL_DEVICES_FOR_GL_CONTEXT_KHR,
+        gl::CL_DEVICES_FOR_GL_CONTEXT_KHR,
     )?
     .into();
     let devices = dev_ptrs
@@ -315,7 +315,7 @@ impl Context {
     /// returns a Result containing the new OpenCL event
     /// or the error code from the OpenCL C API function.
     #[cfg(feature = "cl_khr_gl_sharing")]
-    pub fn create_event_from_gl_sync_khr(&self, sync: gl::gl_sync) -> Result<cl_event> {
+    pub fn create_event_from_gl_sync_khr(&self, sync: gl::cl_GLsync) -> Result<cl_event> {
         Ok(gl::create_event_from_gl_sync_khr(self.context, sync)?)
     }
 
